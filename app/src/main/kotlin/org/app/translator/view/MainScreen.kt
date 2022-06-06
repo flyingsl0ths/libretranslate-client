@@ -21,13 +21,14 @@ class MainScreen : View() {
         const val TEXT_AREA_HEIGHT: Double = 400.0
         const val TEXT_AREA_FONT_SIZE: Double = 18.0
         const val TEXT_AREA_STYLE =
-            "-fx-control-inner-background:#f3f3f3; -fx-text-fill: #000000;"
+            "-fx-control-inner-background:#f3f3f3;"
         const val DEFAULT_LANG: String = "en"
         const val DEFAULT_TARGET_LANG: String = "en"
         const val LANG_BOX_MARGIN: Double = 10.0
         const val TRANSLATION_CHAR_LIMIT: Int = 250
         const val BUTTON_FONT_SIZE: Double = 15.0
         const val TRANSLATE_LABELS_FONT_SIZE: Double = 18.0
+        const val BOTTOM_SECTION_MARGIN: Double = 10.0
     }
 
     private val mController: MainScreenController by inject()
@@ -108,10 +109,13 @@ class MainScreen : View() {
                                         TEXT_AREA_FONT_SIZE
                                     )
                                 style = TEXT_AREA_STYLE
+
                                 minWidth =
                                     TEXT_AREA_WIDTH
+
                                 minHeight =
                                     TEXT_AREA_HEIGHT
+
                                 vboxConstraints {
                                     marginRight =
                                         20.0
@@ -124,6 +128,7 @@ class MainScreen : View() {
                                     marginTop =
                                         11.0
                                 }
+
                                 spacer()
 
                                 val characterCountLabel =
@@ -241,11 +246,13 @@ class MainScreen : View() {
 
                                     disableProperty()
                                         .bind(
-                                            mController.languages()
-                                                .sizeProperty
-                                                .isNotEqualTo(
-                                                    0
-                                                )
+                                            Bindings.or(
+                                                mController.languages()
+                                                    .sizeProperty
+                                                    .isNotEqualTo(
+                                                        0
+                                                    ), mController.serverConnectionRunning()
+                                            )
                                         )
                                 }
 
@@ -306,7 +313,7 @@ class MainScreen : View() {
 
                             hboxConstraints {
                                 marginTop = 30.0
-                                marginRight = 10.0
+                                marginRight = BOTTOM_SECTION_MARGIN
                             }
 
                             disableProperty()
@@ -317,8 +324,12 @@ class MainScreen : View() {
                                             .isEqualTo(
                                                 0
                                             ),
-                                        mFromTextArea?.textProperty()
-                                            ?.isEmpty,
+
+                                        Bindings.or(
+                                            mFromTextArea?.textProperty()
+                                                ?.isEmpty,
+                                            mController.serverConnectionRunning()
+                                        )
                                     )
                                 )
 
@@ -336,6 +347,7 @@ class MainScreen : View() {
 
                             hboxConstraints {
                                 marginTop = 30.0
+                                marginRight = BOTTOM_SECTION_MARGIN
                             }
 
                             style {
@@ -353,12 +365,24 @@ class MainScreen : View() {
 
                             disableProperty()
                                 .bind(
-                                    mController.languages()
-                                        .sizeProperty
-                                        .isEqualTo(
-                                            0
-                                        )
+                                    Bindings.or(
+                                        mController.languages()
+                                            .sizeProperty
+                                            .isEqualTo(
+                                                0
+                                            ), mController.serverConnectionRunning()
+                                    )
                                 )
+                        }
+
+                        progressindicator {
+                            alignment = Pos.BOTTOM_CENTER
+
+                            setMaxSize(40.0, 40.0)
+
+                            visibleWhen {
+                                mController.serverConnectionRunning()
+                            }
                         }
                     }
                 }
