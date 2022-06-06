@@ -21,7 +21,10 @@ class MainScreenController : Controller() {
         const val API_LANGUAGES_URL = "https://libretranslate.com/languages"
     }
 
-    private var mAvailableLanguages: ObservableList<String> = FXCollections.observableArrayList()
+    private var mAvailableLanguages: ObservableList<String> =
+        FXCollections.observableArrayList()
+
+    fun languages(): ObservableList<String> = mAvailableLanguages
 
     fun translate(translation: Translation): String {
         var translatedText = ""
@@ -35,14 +38,17 @@ class MainScreenController : Controller() {
         httpClient.newCall(request).execute().use { response ->
             response.body?.let {
                 translatedText =
-                        Gson().fromJson(it.string(), TranslatedText::class.java).translatedText
+                    Gson().fromJson(
+                        it.string(),
+                        TranslatedText::class
+                            .java
+                    )
+                        .translatedText
             }
         }
 
         return translatedText
     }
-
-    fun languagesCollection(): ObservableList<String> = mAvailableLanguages
 
     fun fetchAvailableLanguages() {
         synchronized(this) {
@@ -51,10 +57,10 @@ class MainScreenController : Controller() {
             }
 
             val request =
-                    Request.Builder()
-                            .url(API_LANGUAGES_URL)
-                            .addHeader("accept", "application/json")
-                            .build()
+                Request.Builder()
+                    .url(API_LANGUAGES_URL)
+                    .addHeader("accept", "application/json")
+                    .build()
 
             var result: ArrayList<Language>? = null
 
@@ -63,13 +69,21 @@ class MainScreenController : Controller() {
             try {
                 httpClient.newCall(request).execute().use { response ->
                     response.body?.let {
-                        val type = object : TypeToken<ArrayList<Language>>() {}.type
+                        val type =
+                            object :
+                                TypeToken<
+                                        ArrayList<
+                                                Language>>() {}
+                                .type
                         result = Gson().fromJson(it.string(), type)
                     }
                 }
-            } catch (e: Exception) {}
+            } catch (_: Exception) {
+            }
 
-            result?.let { it.map { language -> mAvailableLanguages.add(language.code) } }
+            result?.let {
+                it.map { language -> mAvailableLanguages.add(language.code) }
+            }
         }
     }
 
