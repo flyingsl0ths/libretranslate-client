@@ -21,7 +21,7 @@ class MainScreen : View() {
         const val TEXT_AREA_HEIGHT: Double = 400.0
         const val TEXT_AREA_FONT_SIZE: Double = 18.0
         const val TEXT_AREA_STYLE =
-            "-fx-control-inner-background:#f3f3f3 -fx-text-fill: #00000;"
+            "-fx-control-inner-background:#f3f3f3; -fx-text-fill: #000000;"
         const val DEFAULT_LANG: String = "en"
         const val DEFAULT_TARGET_LANG: String = "en"
         const val LANG_BOX_MARGIN: Double = 10.0
