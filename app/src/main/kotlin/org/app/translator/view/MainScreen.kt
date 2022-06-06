@@ -289,10 +289,6 @@ class MainScreen : View() {
                                 }
                             }
                         }
-
-                        runAsync {
-                            mController.fetchAvailableLanguages()
-                        }
                     }
 
                     hbox(alignment = Pos.CENTER) {
@@ -377,6 +373,10 @@ class MainScreen : View() {
                         }
                     }
                 }
+
+            async({
+                mController.fetchAvailableLanguages()
+            })
         }
 
     private fun swapSelectedLanguages() {
