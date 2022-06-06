@@ -1,6 +1,6 @@
 package org.app.translator.view
 
-import async
+import org.app.translator.async
 import javafx.beans.binding.Bindings
 import javafx.geometry.Insets
 import javafx.geometry.Pos

@@ -1,3 +1,5 @@
+package org.app.translator
+
 import javafx.application.Platform
 import kotlin.concurrent.thread
 
