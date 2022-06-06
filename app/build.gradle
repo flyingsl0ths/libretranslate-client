@@ -1,0 +1,56 @@
+plugins {
+    // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
+    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+
+    id 'org.openjfx.javafxplugin' version '0.0.12'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // Align versions of all Kotlin components
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+
+    // Use the Kotlin JDK 8 standard library.
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
+    implementation 'no.tornado:tornadofx:1.7.17'
+}
+
+testing {
+    suites {
+        // Configure the built-in test suite
+        test {
+            // Use Kotlin Test test framework
+            useKotlinTest()
+        }
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'org.app.translator.MainKt'
+}
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.graphics']
+}
