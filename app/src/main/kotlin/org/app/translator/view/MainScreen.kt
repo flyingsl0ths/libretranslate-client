@@ -90,16 +90,23 @@ class MainScreen : View() {
                                                     "#ffffff"
                                                 )
                                         }
+
                                         value =
                                             DEFAULT_LANG
+
                                         items =
                                             mController.languages()
+
                                         hboxConstraints {
                                             marginLeft =
                                                 LANG_BOX_MARGIN
                                             marginBottom =
                                                 10.0
                                         }
+
+                                        disableProperty().bind(
+                                            mController.languages().sizeProperty.isEqualTo(0)
+                                        )
                                     }
                             }
 
@@ -185,16 +192,23 @@ class MainScreen : View() {
                                                     "#ffffff"
                                                 )
                                         }
+
                                         value =
                                             DEFAULT_LANG
+
                                         items =
                                             mController.languages()
+
                                         hboxConstraints {
                                             marginLeft =
                                                 LANG_BOX_MARGIN
                                             marginBottom =
                                                 10.0
                                         }
+
+                                        disableProperty().bind(
+                                            mController.languages().sizeProperty.isEqualTo(0)
+                                        )
                                     }
                             }
 
