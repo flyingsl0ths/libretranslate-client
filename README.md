@@ -6,6 +6,8 @@ A simple https://libretranslate.com/ client made with https://tornadofx.io/
 
 ## Building
 
+Jar will be under app/build/libs/translator.jar
+
 ```bash
 # Mac/Linux
 ./gradlew jar
