@@ -27,6 +27,21 @@ dependencies {
     implementation 'no.tornado:tornadofx:1.7.17'
 }
 
+jar {
+    manifest {
+        attributes(
+        "version": 1.0,
+        "group" : "org.app.translator",
+        "Main-Class" : "org.app.translator.MainKt",
+        )
+    }
+
+    from {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 testing {
     suites {
         // Configure the built-in test suite
